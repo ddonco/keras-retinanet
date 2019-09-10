@@ -10,10 +10,6 @@ import time
 import sys
 from PIL import Image
 
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0,parentdir) 
-
 # import keras_retinanet
 from keras_retinanet import models
 from keras_retinanet.utils.image import read_image_bgr, preprocess_image, resize_image
@@ -21,8 +17,18 @@ from keras_retinanet.utils.visualization import draw_box, draw_caption
 from keras_retinanet.utils.colors import label_color
 
 
+# global variables
 app = flask.Flask(__name__)
 model = None
+graph = None
+
+def modify_path():
+    """
+    add parent directory to path
+    """
+    currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    parentdir = os.path.dirname(currentdir)
+    sys.path.insert(0,parentdir) 
 
 def setup_tf_session():
     """"
@@ -84,6 +90,7 @@ def predict():
 if __name__ == "__main__":
     print(("** Loading defect detection model and starting server..."
             "please wait until server has fully started"))
+    modify_path()
     # load the model
     path = '../../keras_retinanet/bin/snapshots/resnet50_csv_20-MXT-100px.h5'
     load_model(path)
