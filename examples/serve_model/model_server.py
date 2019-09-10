@@ -1,11 +1,18 @@
 # load libraries
 import flask
 import io
+import inspect
 import keras
+import os
 import numpy as np
 import tensorflow as tf
 import time
+import sys
 from PIL import Image
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir) 
 
 # import keras_retinanet
 from keras_retinanet import models
